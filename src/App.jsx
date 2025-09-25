@@ -1,34 +1,50 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import authService from "./appwrite/auth"
+import { login, logout } from './store/authSlice'
+import { Header, Footer } from './components'
+import { Outlet } from 'react-router-dom'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [loading, setLoading] = useState(true)
+  const dispatch = useDispatch()
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+  useEffect(() => {
+    authService.getCurrentUser()
+      .then((userdata) => {
+        if (userdata) {
+          dispatch(login(userdata))
+        } else {
+          dispatch(logout())
+        }
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }, [dispatch])
+
+  return !loading ? (
+    <div className="min-h-screen flex flex-col justify-between bg-white text-zinc-900">
+      
+      {/* Header */}
+      <Header />
+
+      {/* Main Content */}
+      <main className="flex-1">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <Outlet />
+        </div>
+      </main>
+
+      {/* Footer */}
+      <Footer />
+
+    </div>
+  ) : (
+    <div className="flex items-center justify-center min-h-screen text-lg font-medium">
+      Loading...
+    </div>
   )
 }
 
