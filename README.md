@@ -102,20 +102,23 @@ Add same domain in TinyMCE API key allowlist
 
 ## 📸 Screenshots
 
+## 📸 Screenshots
+
 ### 🏠 Homepage
-![Homepage](https://raw.githubusercontent.com/manishub45/my-blog/main/src/assets/home.png)
+[![Homepage](https://raw.githubusercontent.com/manishub45/my-blog/main/src/assets/home.png)](https://github.com/manishub45/my-blog/blob/main/src/assets/home.png?raw=true)
 
 ### 📰 All Posts
-![All Posts](https://raw.githubusercontent.com/manishub45/my-blog/main/src/assets/allpost.png)
+[![All Posts](https://raw.githubusercontent.com/manishub45/my-blog/main/src/assets/allpost.png)](https://github.com/manishub45/my-blog/blob/main/src/assets/allpost.png?raw=true)
 
 ### ➕ Add Post
-![Add Post](https://raw.githubusercontent.com/manishub45/my-blog/main/src/assets/addpost.png)
+[![Add Post](https://raw.githubusercontent.com/manishub45/my-blog/main/src/assets/addpost.png)](https://github.com/manishub45/my-blog/blob/main/src/assets/addpost.png?raw=true)
 
 ### 🧾 Signup
-![Signup](https://raw.githubusercontent.com/manishub45/my-blog/main/src/assets/signup.png)
+[![Signup](https://raw.githubusercontent.com/manishub45/my-blog/main/src/assets/signup.png)](https://github.com/manishub45/my-blog/blob/main/src/assets/signup.png?raw=true)
 
 ### 🔑 Login Page
-![Login](https://raw.githubusercontent.com/manishub45/my-blog/main/src/assets/login.png)
+[![Login](https://raw.githubusercontent.com/manishub45/my-blog/main/src/assets/login.png)](https://github.com/manishub45/my-blog/blob/main/src/assets/login.png?raw=true)
+
 
 
 
