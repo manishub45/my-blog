@@ -102,17 +102,23 @@ Add same domain in TinyMCE API key allowlist
 
 ## 📸 Screenshots
 
-| 🏠 Home Page | 📰 All Posts |
-|---------------|-------------|
+## 📸 Screenshots
+
+### 🏠 Home Page & 📰 All Posts
+| Home Page | All Posts |
+|------------|-----------|
 | ![Home Screenshot](./screenshots/home.png) | ![All Posts Screenshot](./screenshots/allpost.png) |
 
-| ✍️ Add Post | 🧾 Signup |
-|--------------|-----------|
+### ✍️ Add Post & 🧾 Signup
+| Add Post | Signup |
+|-----------|--------|
 | ![Add Post Screenshot](./screenshots/addpost.png) | ![Signup Screenshot](./screenshots/signup.png) |
 
-| 🔐 Login Page |
-|---------------|
+### 🔐 Login Page
+| Login Page |
+|-------------|
 | ![Login Screenshot](./screenshots/login.png) |
+
 
 
 🧾 Author
