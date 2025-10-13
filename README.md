@@ -101,22 +101,19 @@ Add same domain in TinyMCE API key allowlist
 ## 📸 Screenshots
 
 ### 🏠 Homepage
-![Homepage](src/assets/home.png)
+![Homepage](https://raw.githubusercontent.com/manishub45/my-blog/main/src/assets/home.png)
 
 ### 📰 All Posts
-![All Posts](src/assets/allpost.png)
+![All Posts](https://raw.githubusercontent.com/manishub45/my-blog/main/src/assets/allpost.png)
 
 ### ➕ Add Post
-![Add Post](src/assets/addpost.png)
+![Add Post](https://raw.githubusercontent.com/manishub45/my-blog/main/src/assets/addpost.png)
 
 ### 🧾 Signup
-![Signup](src/assets/signup.png)
+![Signup](https://raw.githubusercontent.com/manishub45/my-blog/main/src/assets/signup.png)
 
 ### 🔑 Login Page
-![Login](src/assets/login.png)
-
-
-
+![Login](https://raw.githubusercontent.com/manishub45/my-blog/main/src/assets/login.png)
 
 
 
