@@ -100,20 +100,21 @@ Add same domain in TinyMCE API key allowlist
 
 ## 📸 Screenshots
 
-### 🏠 Homepage 
-![Homepage](./assets/home.png)
+### 🏠 Homepage
+![Homepage](src/assets/home.png)
 
 ### 📰 All Posts
-![All Posts](./assets/allpost.png)
+![All Posts](src/assets/allpost.png)
 
 ### ➕ Add Post
-![Add Post](./assets/addpost.png)
+![Add Post](src/assets/addpost.png)
 
 ### 🧾 Signup
-![Signup](./assets/signup.png)
+![Signup](src/assets/signup.png)
 
 ### 🔑 Login Page
-![Login](./assets/login.png)
+![Login](src/assets/login.png)
+
 
 
 
