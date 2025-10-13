@@ -98,6 +98,8 @@ Add your domain (https://my-blog-nine-phi-30.vercel.app) to Appwrite → Setting
 Add same domain in TinyMCE API key allowlist
 
 
+
+
 ## 📸 Screenshots
 
 ### 🏠 Homepage
@@ -114,6 +116,7 @@ Add same domain in TinyMCE API key allowlist
 
 ### 🔑 Login Page
 ![Login](https://raw.githubusercontent.com/manishub45/my-blog/main/src/assets/login.png)
+
 
 
 
