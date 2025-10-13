@@ -5,7 +5,7 @@ import appwriteService from "../../appwrite/config";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-export default function PostForm({ post }) {
+export default function PostForm({ post, onSuccess }) {  // ✅ props me onSuccess add kiya
     const { register, handleSubmit, watch, setValue, control, getValues } = useForm({
         defaultValues: {
             title: post?.title || "",
@@ -17,33 +17,45 @@ export default function PostForm({ post }) {
 
     const navigate = useNavigate();
     const userData = useSelector((state) => state.auth.userData);
-    
-    // Naya state image preview ke liye
     const [previewUrl, setPreviewUrl] = useState(null);
 
     const submit = async (data) => {
-        if (post) {
-            const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null;
-            if (file) {
-                appwriteService.deleteFile(post.featuredImage);
-            }
-            const dbPost = await appwriteService.updatePost(post.$id, {
-                ...data,
-                featuredImage: file ? file.$id : undefined,
-            });
-            if (dbPost) {
-                navigate(`/post/${dbPost.$id}`);
-            }
-        } else {
-            const file = await appwriteService.uploadFile(data.image[0]);
-            if (file) {
-                const fileId = file.$id;
-                data.featuredImage = fileId;
-                const dbPost = await appwriteService.createPost({ ...data, userId: userData.$id });
+        try {
+            if (post) {
+                // ✅ Edit post flow
+                const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null;
+                if (file) {
+                    appwriteService.deleteFile(post.featuredImage);
+                }
+
+                const dbPost = await appwriteService.updatePost(post.$id, {
+                    ...data,
+                    featuredImage: file ? file.$id : undefined,
+                });
+
                 if (dbPost) {
+                    if (onSuccess) onSuccess(); // ✅ success callback trigger
                     navigate(`/post/${dbPost.$id}`);
                 }
+            } else {
+                // ✅ Add new post flow
+                const file = await appwriteService.uploadFile(data.image[0]);
+                if (file) {
+                    const fileId = file.$id;
+                    data.featuredImage = fileId;
+                    const dbPost = await appwriteService.createPost({
+                        ...data,
+                        userId: userData.$id,
+                    });
+
+                    if (dbPost) {
+                        if (onSuccess) onSuccess(); // ✅ success callback trigger
+                        navigate(`/post/${dbPost.$id}`);
+                    }
+                }
             }
+        } catch (error) {
+            console.error("Error while submitting post:", error);
         }
     };
 
@@ -62,7 +74,6 @@ export default function PostForm({ post }) {
             if (name === "title") {
                 setValue("slug", slugTransform(value.title), { shouldValidate: true });
             }
-            // Image preview ke liye naya logic
             if (name === "image" && value.image && value.image[0]) {
                 setPreviewUrl(URL.createObjectURL(value.image[0]));
             }
@@ -72,8 +83,10 @@ export default function PostForm({ post }) {
     }, [watch, slugTransform, setValue]);
 
     return (
-        // Form ke layout ko aacha banaya gaya hai
-        <form onSubmit={handleSubmit(submit)} className="flex flex-wrap bg-gray-100 p-4 sm:p-8 rounded-lg">
+        <form
+            onSubmit={handleSubmit(submit)}
+            className="flex flex-wrap bg-gray-100 p-4 sm:p-8 rounded-lg"
+        >
             {/* Left Column */}
             <div className="w-full md:w-2/3 px-2">
                 <Input
@@ -88,7 +101,12 @@ export default function PostForm({ post }) {
                     className="mb-4"
                     {...register("slug", { required: true })}
                 />
-                <RTE label="Content :" name="content" control={control} defaultValue={getValues("content")} />
+                <RTE
+                    label="Content :"
+                    name="content"
+                    control={control}
+                    defaultValue={getValues("content")}
+                />
             </div>
 
             {/* Right Column */}
@@ -100,8 +118,8 @@ export default function PostForm({ post }) {
                     accept="image/png, image/jpg, image/jpeg, image/gif"
                     {...register("image", { required: !post })}
                 />
-                
-                {/* Purani image ka preview (Edit mode mein) */}
+
+                {/* Old image preview */}
                 {post && (
                     <div className="w-full mb-4">
                         <p className="text-sm text-gray-600 mb-2">Current Image:</p>
@@ -112,10 +130,10 @@ export default function PostForm({ post }) {
                         />
                     </div>
                 )}
-                
-                {/* Nayi select ki hui image ka preview */}
+
+                {/* New selected image preview */}
                 {previewUrl && (
-                     <div className="w-full mb-4">
+                    <div className="w-full mb-4">
                         <p className="text-sm text-gray-600 mb-2">New Image Preview:</p>
                         <img
                             src={previewUrl}
@@ -124,14 +142,19 @@ export default function PostForm({ post }) {
                         />
                     </div>
                 )}
-                
+
                 <Select
                     options={["active", "inactive"]}
                     label="Status"
                     className="mb-4"
                     {...register("status", { required: true })}
                 />
-                <Button type="submit" bgColor={post ? "bg-green-500" : "bg-blue-600"} className="w-full hover:opacity-90">
+
+                <Button
+                    type="submit"
+                    bgColor={post ? "bg-green-500" : "bg-blue-600"}
+                    className="w-full hover:opacity-90"
+                >
                     {post ? "Update" : "Submit"}
                 </Button>
             </div>

@@ -1,24 +1,28 @@
-import React, { useEffect, useState } from 'react'
-import { Container, PostForm } from '../components'
+import React, { useEffect, useState } from "react";
+import { Container, PostForm } from "../components";
 import appwriteService from "../appwrite/config";
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-hot-toast"; // ✅ add this import
 
 function EditPost() {
-  const [post, setPosts] = useState(null)
-  const { slug } = useParams()
-  const navigate = useNavigate()
+  const [post, setPosts] = useState(null);
+  const { slug } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (slug) {
       appwriteService.getPost(slug).then((post) => {
-        if (post) {
-          setPosts(post)
-        }
-      })
+        if (post) setPosts(post);
+      });
     } else {
-      navigate('/')
+      navigate("/");
     }
-  }, [slug, navigate])
+  }, [slug, navigate]);
+
+  // ✅ toast on update
+  const handlePostUpdated = () => {
+    toast.success("Post updated successfully! ✅");
+  };
 
   // design wrapper + loading state (no logic change)
   return post ? (
@@ -29,27 +33,34 @@ function EditPost() {
           role="region"
           aria-labelledby="edit-post-heading"
         >
-          <h1 id="edit-post-heading" className="text-2xl md:text-3xl font-semibold text-gray-900 mb-2">
+          <h1
+            id="edit-post-heading"
+            className="text-2xl md:text-3xl font-semibold text-gray-900 mb-2"
+          >
             Edit Post
           </h1>
           <p className="text-sm text-gray-600 mb-6">
-            Update your post content, change image, or edit slug and metadata. Changes will overwrite the existing post.
+            Update your post content, change image, or edit slug and metadata.
+            Changes will overwrite the existing post.
           </p>
 
-          {/* pass the fetched post into PostForm (logic unchanged) */}
-          <PostForm post={post} />
+          {/* pass post & success handler */}
+          <PostForm post={post} onSuccess={handlePostUpdated} />
         </div>
       </Container>
     </div>
   ) : (
-    // simple, accessible loading / empty state while data fetches
     <div className="w-full py-20 flex items-center justify-center bg-gray-50 min-h-[calc(100vh-80px)]">
       <div className="text-center text-gray-600">
-        <div className="mb-3" role="status" aria-live="polite">Loading post…</div>
-        <div className="text-sm">If this takes too long, check your network or try reloading.</div>
+        <div className="mb-3" role="status" aria-live="polite">
+          Loading post…
+        </div>
+        <div className="text-sm">
+          If this takes too long, check your network or try reloading.
+        </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default EditPost
+export default EditPost;

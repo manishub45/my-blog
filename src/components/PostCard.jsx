@@ -2,19 +2,21 @@ import React from "react";
 import { Link } from "react-router-dom";
 import appwriteService from "../appwrite/config";
 
-const FALLBACK_IMG = "/fallback.png"; // optional: put simple placeholder in public/
+const FALLBACK_IMG = "/fallback.png"; // optional placeholder image
 
-function PostCard({ $id, title, featuredImage }) {
-  const imgSrc = featuredImage ? appwriteService.getFileView(featuredImage) : FALLBACK_IMG;
+function PostCard({ $id, title, featuredImage, onDelete }) {
+  const imgSrc = featuredImage
+    ? appwriteService.getFileView(featuredImage)
+    : FALLBACK_IMG;
 
   return (
-    <article className="w-full">
+    <article className="w-full relative group">
       <Link
         to={`/post/${$id}`}
         aria-label={`Open post: ${title}`}
         className="block"
       >
-        <div className="w-full bg-white rounded-xl p-4 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 group">
+        <div className="w-full bg-white rounded-xl p-4 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
           {/* Image */}
           <div className="w-full mb-4 overflow-hidden rounded-xl h-40 bg-gray-100 flex items-center justify-center">
             <img
@@ -38,6 +40,19 @@ function PostCard({ $id, title, featuredImage }) {
           </div>
         </div>
       </Link>
+
+      {/* 🗑️ Delete Button (appears on hover or always visible) */}
+      {onDelete && (
+        <button
+          onClick={(e) => {
+            e.preventDefault(); // stop link navigation
+            onDelete($id); // call parent delete function
+          }}
+          className="absolute top-3 right-3 bg-red-500 text-white text-sm px-3 py-1.5 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-red-600"
+        >
+          Delete
+        </button>
+      )}
     </article>
   );
 }
